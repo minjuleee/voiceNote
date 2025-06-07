@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="32dp"
+        android:gravity="center_horizontal">
+
+        <!-- 로고 이미지 -->
+        <ImageView
+            android:id="@+id/imageLogo"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="148dp"
+            android:src="@drawable/ic_app_logo"
+            android:contentDescription="앱 로고" />
+
+        <!-- LOG IN 텍스트 -->
+        <TextView
+            android:id="@+id/textLoginTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SIGN UP"
+            android:textColor="#0070ED"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:layout_marginTop="24dp" />
+        <!--이름 입력-->
+        <EditText
+            android:id="@+id/editTextName"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="이름"
+            android:background="@drawable/edittext_background"
+            android:paddingHorizontal="16dp"
+            android:layout_marginTop="32dp" />
+
+        <!-- 아이디 입력 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="12dp">
+
+            <EditText
+                android:id="@+id/editTextId"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:hint="아이디"
+                android:background="@drawable/edittext_background"
+                android:paddingHorizontal="16dp" />
+
+            <Button
+                android:id="@+id/buttonCheckId"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:text="중복확인"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/rounded_button_blue"
+                android:layout_marginStart="8dp"/>
+        </LinearLayout>
+
+        <!-- 비밀번호 입력 -->
+        <EditText
+            android:id="@+id/editTextPassword"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="비밀번호"
+            android:inputType="textPassword"
+            android:background="@drawable/edittext_background"
+            android:paddingHorizontal="16dp"
+            android:layout_marginTop="12dp" />
+
+        <!-- 회원가입 버튼 -->
+        <Button
+            android:id="@+id/buttonSignup"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="회원가입"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/rounded_button_blue" />
+
+        <!-- 로그인 텍스트 -->
+        <TextView
+            android:id="@+id/textSignupPrompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="회원이신가요? 로그인하기"
+            android:textColor="#4E4D4D"
+            android:textSize="14sp"
+            android:layout_marginTop="16dp" />
+
+        <!-- 푸터 -->
+        <TextView
+            android:id="@+id/textFooter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="VoiceNote+\nmade by minjuleee"
+            android:textAlignment="center"
+            android:textColor="#0070ED"
+            android:textSize="13sp"
+            android:layout_marginTop="60dp" />
+
+
+    </LinearLayout>
+</ScrollView>
