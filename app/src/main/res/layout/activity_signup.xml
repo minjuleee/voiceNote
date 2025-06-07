@@ -20,7 +20,7 @@
             android:src="@drawable/ic_app_logo"
             android:contentDescription="앱 로고" />
 
-        <!-- LOG IN 텍스트 -->
+        <!-- SIGN UP 텍스트 -->
         <TextView
             android:id="@+id/textLoginTitle"
             android:layout_width="wrap_content"
@@ -30,42 +30,18 @@
             android:textSize="28sp"
             android:textStyle="bold"
             android:layout_marginTop="24dp" />
-        <!--이름 입력-->
-        <EditText
-            android:id="@+id/editTextName"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:hint="이름"
-            android:background="@drawable/edittext_background"
-            android:paddingHorizontal="16dp"
-            android:layout_marginTop="32dp" />
 
         <!-- 아이디 입력 -->
-        <LinearLayout
+        <EditText
+            android:id="@+id/editTextEmail"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="12dp">
-
-            <EditText
-                android:id="@+id/editTextId"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_weight="1"
-                android:hint="아이디"
-                android:background="@drawable/edittext_background"
-                android:paddingHorizontal="16dp" />
-
-            <ImageButton
-                android:id="@+id/buttonCheckId"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:text="중복확인"
-                android:textColor="#FFFFFF"
-                android:src="@drawable/twice_button"
-                android:background="@null"
-                android:layout_marginStart="8dp"/>
-        </LinearLayout>
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:hint="이메일"
+            android:inputType="text"
+            android:background="@drawable/edittext_background"
+            android:paddingHorizontal="16dp"
+            android:layout_marginTop="12dp"/>
 
         <!-- 비밀번호 입력 -->
         <EditText

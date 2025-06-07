@@ -21,6 +21,16 @@
             android:textStyle="bold"
             android:textColor="#000000" />
 
+        <!-- 날짜 + 시간 -->
+        <TextView
+            android:id="@+id/textDateTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2025.05.17 토 오후 06:52 18초"
+            android:textSize="13sp"
+            android:textColor="#333333"
+            android:layout_marginTop="6dp" />
+
         <!-- 요약 -->
         <TextView
             android:id="@+id/textSummary"
@@ -31,15 +41,18 @@
             android:textColor="#444444"
             android:layout_marginTop="2dp" />
 
-        <!-- 날짜 + 시간 -->
         <TextView
-            android:id="@+id/textDateTime"
-            android:layout_width="wrap_content"
+            android:id="@+id/textLiveTranscript"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="2025.05.17 토 오후 06:52 18초"
-            android:textSize="13sp"
-            android:textColor="#333333"
-            android:layout_marginTop="6dp" />
+            android:layout_marginTop="12dp"
+            android:padding="16dp"
+            android:background="#EEEEEE"
+            android:text="실시간 텍스트 요약입니다."
+            android:textSize="14sp"
+            android:textColor="#222222" />
+
+
 
     </LinearLayout>
 

@@ -33,6 +33,7 @@ class DetailActivity : AppCompatActivity() {
         val summaryView = findViewById<TextView>(R.id.textSummary)
         val dateView = findViewById<TextView>(R.id.textDate)
         val rawTextView = findViewById<TextView>(R.id.textLiveTranscript)
+
         val playButton = findViewById<ImageView>(R.id.buttonPlay)
         val seekBar = findViewById<SeekBar>(R.id.seekBar)
 

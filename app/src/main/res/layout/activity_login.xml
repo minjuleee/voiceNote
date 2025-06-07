@@ -33,10 +33,10 @@
 
         <!-- 아이디 입력 -->
         <EditText
-            android:id="@+id/editTextId"
+            android:id="@+id/editTextEmail"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:hint="아이디"
+            android:hint="이메일"
             android:background="@drawable/edittext_background"
             android:paddingHorizontal="16dp"
             android:layout_marginTop="32dp" />

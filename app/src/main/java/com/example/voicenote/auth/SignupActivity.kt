@@ -1,49 +1,59 @@
 package com.example.voicenote.auth
 
-import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.Typeface
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
-import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
-import android.widget.Button
+import android.text.TextPaint
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.voicenote.R
-import com.example.voicenote.auth.LoginActivity
-import com.example.voicenote.home.HomeActivity
+import com.google.firebase.auth.FirebaseAuth
 
 class SignupActivity : AppCompatActivity() {
+
+    private lateinit var auth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
 
-        // 중복확인 버튼 (추후 로직 연결 가능)
-        val checkIdButton: ImageButton = findViewById(R.id.buttonCheckId)
-        val editTextId: EditText = findViewById(R.id.editTextId)
-        checkIdButton.setOnClickListener {
-            val userId = editTextId.text.toString()
-            // 여기서 아이디 중복확인 로직 수행
+        auth = FirebaseAuth.getInstance()
+
+        val editTextEmail: EditText = findViewById(R.id.editTextEmail)
+        val editTextPassword: EditText = findViewById(R.id.editTextPassword)
+        val signupButton: ImageButton = findViewById(R.id.buttonSignup)
+
+
+        // ✅ 회원가입 버튼 클릭 처리
+        signupButton.setOnClickListener {
+            val email = editTextEmail.text.toString().trim()
+            val password = editTextPassword.text.toString().trim()
+
+            if (email.isNotEmpty() && password.length >= 6) {
+                auth.createUserWithEmailAndPassword(email, password)
+                    .addOnSuccessListener {
+                        Toast.makeText(this, "회원가입 성공", Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(this, LoginActivity::class.java))
+                        finish()
+                    }
+                    .addOnFailureListener { e ->
+                        Toast.makeText(this, "회원가입 실패: ${e.message}", Toast.LENGTH_SHORT).show()
+                    }
+            } else {
+                Toast.makeText(this, "이메일과 6자리 이상 비밀번호를 입력하세요", Toast.LENGTH_SHORT).show()
+            }
         }
 
-        // 회원가입 버튼
-        val loginButton: ImageButton = findViewById(R.id.buttonSignup)
-        loginButton.setOnClickListener {
-            // 회원가입 로직 처리
-            // 로그인창으로 가기
-            val intent = Intent(this@SignupActivity, LoginActivity::class.java)
-            startActivity(intent)
-        }
-
-        // "회원이신가요? 로그인하기" 강조 + 클릭 처리
+        // ✅ "로그인하기" 텍스트 클릭 처리
         val loginTextView: TextView = findViewById(R.id.textSignupPrompt)
         val fullText = "회원이신가요? 로그인하기"
         val spannable = SpannableString(fullText)
@@ -64,7 +74,5 @@ class SignupActivity : AppCompatActivity() {
         loginTextView.text = spannable
         loginTextView.movementMethod = LinkMovementMethod.getInstance()
         loginTextView.highlightColor = Color.TRANSPARENT
-
-
     }
 }
