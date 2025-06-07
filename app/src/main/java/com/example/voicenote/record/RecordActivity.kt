@@ -6,9 +6,11 @@ import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import com.example.voicenote.R
 import com.example.voicenote.detail.DetailActivity
+
 import com.example.voicenote.home.HomeActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+
 
 class RecordActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

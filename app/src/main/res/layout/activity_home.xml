@@ -9,9 +9,11 @@
         android:id="@+id/searchBar"
         android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_margin="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="50dp"
         android:background="@drawable/edittext_background"
-        android:paddingHorizontal="12dp"
+        android:paddingHorizontal="30dp"
         android:gravity="center_vertical"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,7 +25,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:hint="안드로이드"
+            android:hint="검색어를 입력해주세요"
             android:background="@android:color/transparent"
             android:textSize="16sp"
             android:inputType="text" />
@@ -51,17 +53,20 @@
     <!-- 🎤 중앙 녹음 버튼 -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabRecord"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:src="@drawable/microphone_solid"
-        android:contentDescription="녹음"
-        android:tint="@android:color/white"
+        android:tint="#ffffff"
+        android:elevation="0dp"
+        app:useCompatPadding="false"
+        android:scaleType="center"
+        android:layout_marginBottom="48dp"
         android:backgroundTint="#FF3D00"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="36dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        />
+         />
+
 
     <!-- 🧭 하단 탭바 -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
