@@ -156,7 +156,7 @@ class RecordActivity : AppCompatActivity() {
     override fun onDestroy() { super.onDestroy(); speechRecognizer.destroy() }
 
     private fun summarizeText(inputText: String, callback: (String) -> Unit) {
-        val apiKey = "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"
+        // api key 넣어줘야함
         val url = "https://api-inference.huggingface.co/models/facebook/bart-large-cnn"
 
         val client = OkHttpClient()
