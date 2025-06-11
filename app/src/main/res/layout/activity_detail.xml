@@ -47,44 +47,49 @@
         android:layout_marginTop="12dp" />
 
     <!-- 실시간 음성 텍스트 제목 -->
+
+    <!-- 실시간 음성 텍스트 본문 -->
     <TextView
         android:id="@+id/textLiveTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:background="#ffffff"
-        android:padding="24dp"
+        android:padding="8dp"
         android:text="실시간 음성 텍스트화"
-        android:textColor="#000000"
+        android:textColor="#0070ED"
         android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/textDate"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textDate" />
 
-    <!-- 실시간 음성 텍스트 본문 -->
+    <!-- 요약 제목 -->
     <TextView
         android:id="@+id/textLiveTranscript"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="#ffffff"
-        android:padding="24dp"
+        android:padding="8dp"
         android:text=""
         android:textColor="#000000"
         android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/textLiveTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/textLiveTitle" />
 
-    <!-- 요약 제목 -->
     <TextView
         android:id="@+id/textSummaryTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="#ffffff"
-        android:padding="24dp"
+        android:padding="8dp"
         android:text="요약한 메모"
-        android:textColor="#000000"
+        android:textColor="#0070ED"
         android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@id/textLiveTranscript"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -96,7 +101,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="#ffffff"
-        android:padding="24dp"
+        android:padding="8dp"
         android:text=""
         android:textColor="#000000"
         android:textSize="16sp"
@@ -118,14 +123,16 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabRecord1"
-        android:layout_width="64dp"
+        android:layout_width="197dp"
         android:layout_height="64dp"
-        android:layout_marginBottom="-40dp"
+        android:layout_marginBottom="56dp"
         android:backgroundTint="#FF3D00"
         android:src="@drawable/microphone_solid"
         android:tint="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNav"
-        tools:layout_editor_absoluteX="179dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <!-- 녹음 이동 FAB -->
 

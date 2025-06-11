@@ -41,16 +41,16 @@
             android:textColor="#444444"
             android:layout_marginTop="2dp" />
 
-        <TextView
-            android:id="@+id/textLiveTranscript"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:padding="16dp"
-            android:background="#EEEEEE"
-            android:text="실시간 텍스트 요약입니다."
-            android:textSize="14sp"
-            android:textColor="#222222" />
+<!--        <TextView-->
+<!--            android:id="@+id/textLiveTranscript"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="12dp"-->
+<!--            android:padding="16dp"-->
+<!--            android:background="#EEEEEE"-->
+<!--            android:text="실시간 텍스트 요약입니다."-->
+<!--            android:textSize="14sp"-->
+<!--            android:textColor="#222222" />-->
 
 
 

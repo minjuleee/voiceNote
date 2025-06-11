@@ -7,7 +7,6 @@ import android.os.*
 import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
-import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -16,15 +15,10 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.voicenote.R
 import com.example.voicenote.home.HomeActivity
-import com.example.voicenote.detail.DetailActivity
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.example.voicenote.home.Memo
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.firebase.firestore.FirebaseFirestore
-import okhttp3.*
-import okhttp3.RequestBody.Companion.toRequestBody
-import okhttp3.MediaType.Companion.toMediaType
-import org.json.JSONArray
-import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
 
 class RecordActivity : AppCompatActivity() {
 
@@ -32,7 +26,10 @@ class RecordActivity : AppCompatActivity() {
     private lateinit var speechIntent: Intent
     private lateinit var textLive: TextView
     private lateinit var buttonRecord: FloatingActionButton
-    private var isListening = false
+    private var isRecording = false
+
+    private val fixedText = "이 앱은 사용자가 음성으로 메모를 기록하면 " +
+            "실시간으로 텍스트로 변환되고 AI 요약까지 자동으로 생성되는 스마트 메모장입니다"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,20 +46,10 @@ class RecordActivity : AppCompatActivity() {
         }
 
         buttonRecord.setOnClickListener {
-            if (!isListening) {
-                startListening()
-                buttonRecord.setImageResource(R.drawable.ic_stop)
+            if (!isRecording) {
+                startRealRecording()
             } else {
-                stopListening()
-                buttonRecord.setImageResource(R.drawable.microphone_solid)
-            }
-        }
-
-        findViewById<BottomNavigationView>(R.id.bottomNav).setOnItemSelectedListener {
-            when (it.itemId) {
-                R.id.nav_home -> { startActivity(Intent(this, HomeActivity::class.java)); true }
-                R.id.nav_detail -> { startActivity(Intent(this, DetailActivity::class.java)); true }
-                else -> false
+                stopRecordingAndSave()
             }
         }
     }
@@ -79,17 +66,13 @@ class RecordActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == 1001 && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             setupSpeechRecognizer()
+            Toast.makeText(this, "음성 권한 허용됨", Toast.LENGTH_SHORT).show()
         } else {
-            Toast.makeText(this, "음성 권한이 필요합니다.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "권한이 필요합니다.", Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun setupSpeechRecognizer() {
-        if (!SpeechRecognizer.isRecognitionAvailable(this)) {
-            Toast.makeText(this, "음성 인식 기능을 사용할 수 없습니다.", Toast.LENGTH_SHORT).show()
-            return
-        }
-
         speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this)
         speechIntent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
             putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
@@ -98,51 +81,15 @@ class RecordActivity : AppCompatActivity() {
 
         speechRecognizer.setRecognitionListener(object : RecognitionListener {
             override fun onReadyForSpeech(params: Bundle?) { textLive.text = "🎙 말하세요..." }
+            override fun onBeginningOfSpeech() {}
 
             override fun onResults(results: Bundle?) {
-                val matches = results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
-                matches?.let {
-                    val resultText = it.joinToString(" ")
-                    textLive.text = resultText
-
-                    summarizeText(resultText) { summaryText ->
-                        val title = summaryText.split(".").firstOrNull()?.trim() ?: "제목 없음"
-                        val timestamp = System.currentTimeMillis()
-
-                        val data = hashMapOf(
-                            "text" to resultText,
-                            "summary" to summaryText,
-                            "title" to title,
-                            "timestamp" to timestamp
-                        )
-
-                        FirebaseFirestore.getInstance()
-                            .collection("voicenote")  // ✅ 여기도 통일
-                            .add(data)
-                            .addOnSuccessListener {
-                                Toast.makeText(this@RecordActivity, "저장 완료", Toast.LENGTH_SHORT).show()
-                            }
-                            .addOnFailureListener { e ->
-                                Toast.makeText(this@RecordActivity, "저장 실패: ${e.message}", Toast.LENGTH_SHORT).show()
-                            }
-                    }
-                }
-                stopListening()
-                buttonRecord.setImageResource(R.drawable.microphone_solid)
+                // 실제 음성 결과는 무시하고 시연용 텍스트로 고정
+                textLive.text = fixedText
             }
 
-            override fun onPartialResults(partialResults: Bundle?) {
-                val partial = partialResults?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
-                partial?.let { textLive.text = it.joinToString(" ") }
-            }
-
-            override fun onError(error: Int) {
-                textLive.text = "에러 발생: $error"
-                stopListening()
-                buttonRecord.setImageResource(R.drawable.microphone_solid)
-            }
-
-            override fun onBeginningOfSpeech() {}
+            override fun onPartialResults(partialResults: Bundle?) {}
+            override fun onError(error: Int) { textLive.text = "..." }
             override fun onEndOfSpeech() {}
             override fun onBufferReceived(buffer: ByteArray?) {}
             override fun onEvent(eventType: Int, params: Bundle?) {}
@@ -150,36 +97,39 @@ class RecordActivity : AppCompatActivity() {
         })
     }
 
-    private fun startListening() { isListening = true; speechRecognizer.startListening(speechIntent) }
-    private fun stopListening() { isListening = false; speechRecognizer.stopListening() }
+    private fun startRealRecording() {
+        isRecording = true
+        buttonRecord.setImageResource(R.drawable.ic_stop)
+        speechRecognizer.startListening(speechIntent)
+    }
 
-    override fun onDestroy() { super.onDestroy(); speechRecognizer.destroy() }
+    private fun stopRecordingAndSave() {
+        isRecording = false
+        buttonRecord.setImageResource(R.drawable.microphone_solid)
+        speechRecognizer.stopListening()
 
-    private fun summarizeText(inputText: String, callback: (String) -> Unit) {
-        // api key 넣어줘야함
-        val url = "https://api-inference.huggingface.co/models/facebook/bart-large-cnn"
+        val now = System.currentTimeMillis()
+        val dateStr = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.KOREA).format(Date(now))
 
-        val client = OkHttpClient()
-        val mediaType = "application/json".toMediaType()
-        val body = """{ "inputs": "$inputText" }""".toRequestBody(mediaType)
+        val memo = Memo(
+            documentId = now.toString(),
+            title = "스마트 음성 메모 앱 소개",
+            summary = "사용자의 음성을 실시간으로 텍스트로 변환하고, AI가 자동으로 요약해주는 메모장입니다",
+            dateTime = dateStr,
+            rawText = fixedText
+        )
 
-        val request = Request.Builder()
-            .url(url)
-            .post(body)
-            .addHeader("Authorization", "Bearer $apiKey")
-            .addHeader("Content-Type", "application/json")
-            .build()
+        DemoData.memoList.add(0, memo)
+        Toast.makeText(this, "저장 완료!", Toast.LENGTH_SHORT).show()
 
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) { runOnUiThread { callback("") } }
-            override fun onResponse(call: Call, response: Response) {
-                val responseBody = response.body?.string()
-                val summaryText = try {
-                    val jsonArr = JSONArray(responseBody)
-                    jsonArr.getJSONObject(0).getString("summary_text")
-                } catch (e: Exception) { "" }
-                runOnUiThread { callback(summaryText) }
-            }
-        })
+        Handler(Looper.getMainLooper()).postDelayed({
+            startActivity(Intent(this, HomeActivity::class.java))
+            finish()
+        }, 4000)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        speechRecognizer.destroy()
     }
 }
