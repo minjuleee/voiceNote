@@ -41,6 +41,9 @@ android {
 dependencies {
     implementation(platform("com.google.firebase:firebase-bom:33.15.0"))
     implementation("com.google.firebase:firebase-analytics")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("org.json:json:20240303")
+
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

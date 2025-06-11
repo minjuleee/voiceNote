@@ -5,14 +5,17 @@
     android:background="#FFFFFF">
 
     <!-- 상단 뒤로가기 + listening 텍스트 -->
+
+    <!-- 파란 카드 영역 -->
+
     <ImageView
         android:id="@+id/buttonBack"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:src="@drawable/ic_back"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="60dp"
         android:contentDescription="뒤로가기"
+        android:src="@drawable/ic_back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -20,61 +23,50 @@
         android:id="@+id/textListening"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="listening"
+        android:layout_marginTop="60dp"
+        android:text="Recording"
         android:textColor="#0070ED"
-        android:textSize="16sp"
+        android:textSize="26sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toEndOf="@id/buttonBack"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5" />
+        app:layout_constraintHorizontal_bias="0.401"
+        app:layout_constraintStart_toEndOf="@id/buttonBack"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- 파란 카드 영역 -->
     <LinearLayout
         android:id="@+id/recordCard"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="60dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:orientation="vertical"
-        android:background="#0070ED"
-        android:padding="24dp"
-        android:gravity="center"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="18dp"
+        android:background="@drawable/record_card_background"
         android:clipToOutline="true"
         android:elevation="2dp"
-        app:layout_constraintTop_toBottomOf="@id/textListening"
-        app:layout_constraintStart_toStartOf="parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="24dp"
+        app:layout_constraintBottom_toTopOf="@id/bottomNav"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/bottomNav">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textListening">
 
-<!--        <ImageView-->
-<!--            android:id="@+id/iconMic"-->
-<!--            android:layout_width="36dp"-->
-<!--            android:layout_height="36dp"-->
-<!--            android:layout_gravity="start"-->
-<!--            android:src="@drawable/ic_voice_wave"-->
-<!--            android:tint="@android:color/white"-->
-<!--            android:layout_marginBottom="12dp" />-->
 
         <TextView
             android:id="@+id/textLive"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="실시간 음성 텍스트화"
+            android:layout_marginBottom="16dp"
+            android:text="녹음버튼을 누르고 녹음을 해주세요"
             android:textColor="#FFFFFF"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:layout_marginBottom="16dp" />
-
-        <TextView
-            android:id="@+id/textWaveform"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Waveform 음성 그래프"
-            android:textColor="#DCEFFF"
-            android:textSize="14sp" />
+            android:maxLines="10"
+            android:ellipsize="none"
+            android:lineSpacingExtra="4dp"
+            android:breakStrategy="simple"
+            />
     </LinearLayout>
 
     <!-- 중앙 녹음 버튼 -->
@@ -83,12 +75,14 @@
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_marginBottom="60dp"
-        android:src="@drawable/ic_stop"
+        app:srcCompat="@drawable/ic_stop"
         android:tint="@android:color/white"
         android:backgroundTint="#FF3D00"
+        app:maxImageSize="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
 
     <!-- 하단 탭바 -->
     <com.google.android.material.bottomnavigation.BottomNavigationView

@@ -1,14 +1,15 @@
+package com.example.voicenote.home
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.voicenote.R
-import com.example.voicenote.home.Memo
 
 class MemoAdapter(
-    private val originalList: List<Memo>,
-    private val onItemClick: (Memo) -> Unit // ✅ 클릭 시 실행할 콜백 함수 추가
+    private var originalList: List<Memo>,
+    private val onItemClick: (Memo) -> Unit
 ) : RecyclerView.Adapter<MemoAdapter.MemoViewHolder>() {
 
     private var filteredList: List<Memo> = originalList.toList()
@@ -30,10 +31,7 @@ class MemoAdapter(
         holder.textSummary.text = memo.summary
         holder.textDateTime.text = memo.dateTime
 
-        // ✅ 클릭 시 onItemClick 콜백 호출
-        holder.itemView.setOnClickListener {
-            onItemClick(memo)
-        }
+        holder.itemView.setOnClickListener { onItemClick(memo) }
     }
 
     override fun getItemCount(): Int = filteredList.size
@@ -46,6 +44,12 @@ class MemoAdapter(
                 it.title.contains(query, ignoreCase = true) || it.summary.contains(query, ignoreCase = true)
             }
         }
+        notifyDataSetChanged()
+    }
+
+    fun updateList(newList: List<Memo>) {
+        originalList = newList
+        filteredList = newList
         notifyDataSetChanged()
     }
 }
